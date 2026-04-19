@@ -1,0 +1,28 @@
+services:
+  chrome:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TEST_EMAIL=${TEST_EMAIL}
+      - TEST_PASSWORD=${TEST_PASSWORD}
+      - WEBDRIVER_URL=http://chrome:4444/wd/hub
+    depends_on:
+      chrome:
+        condition: service_healthy
+    volumes:
+      - ./test-output:/app/test-output
+    working_dir: /app

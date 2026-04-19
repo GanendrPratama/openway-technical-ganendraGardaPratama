@@ -1,0 +1,235 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage[english]{babel}
+
+\title{Test Documentation: Mail Deletion Functionality}
+\author{QA Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+This document outlines the test cases for the mail deletion functionality of the mail provider (Gmail). The test cases are designed to ensure that mail deletion works as expected across various scenarios.
+
+\section{Test Case Format}
+Based on the guidelines from Section 1 of GUIDE.MD, each test case includes:
+\begin{itemize}
+\item \textbf{Test Case ID}: Unique identifier
+\item \textbf{Objective}: Clear statement of what the test aims to achieve
+\item \textbf{Preconditions}: Initial state required before execution
+\item \textbf{Test Inputs}: Specific data fed into the system
+\item \textbf{Execution Steps}: Sequence of events to carry out the test
+\item \textbf{Expected Results}: Anticipated output/state transition
+\item \textbf{Actual Results}: Observed behavior after execution
+\end{itemize}
+
+\section{Test Cases for Mail Deletion}
+
+\subsection{Basic Deletion Operations}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Objective} & \textbf{Preconditions} \\
+\hline
+TC-DEL-001 & Verify single email can be deleted from inbox & User is logged in, inbox contains at least one unread email \\
+\hline
+TC-DEL-002 & Verify multiple selected emails can be deleted & User is logged in, inbox contains at least 3 emails \\
+\hline
+TC-DEL-003 & Verify deleted email moves to Trash folder & Same as TC-DEL-001 \\
+\hline
+TC-DEL-004 & Verify deletion of read email works & User is logged in, at least one read email exists in inbox \\
+\hline
+TC-DEL-005 & Verify deletion of unread email works & User is logged in, at least one unread email exists in inbox \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Inputs} & \textbf{Execution Steps} \\
+\hline
+TC-DEL-001 & One selected email (Email ID: test-001) & \parbox{5cm}{1. Select checkbox next to email\\2. Click Delete button\\3. Observe email removal} \\
+\hline
+TC-DEL-002 & Three selected emails (IDs: test-002, test-003, test-004) & \parbox{5cm}{1. Select checkboxes for 3 emails\\2. Click Delete button\\3. Observe removal} \\
+\hline
+TC-DEL-003 & One selected email & Same as TC-DEL-001 + Check Trash folder \\
+\hline
+TC-DEL-004 & One read email & Same as TC-DEL-001 \\
+\hline
+TC-DEL-005 & One unread email & Same as TC-DEL-001 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Expected Results} \\
+\hline
+TC-DEL-001 & Email is removed from inbox, moves to Trash \\
+\hline
+TC-DEL-002 & All 3 emails removed from inbox, moved to Trash \\
+\hline
+TC-DEL-003 & Email not in inbox, appears in Trash folder with original content intact \\
+\hline
+TC-DEL-004 & Read email deleted successfully, moved to Trash \\
+\hline
+TC-DEL-005 & Unread email deleted successfully, moved to Trash \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Undo and Recovery Operations}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Objective} & \textbf{Preconditions} \\
+\hline
+TC-DEL-006 & Verify undo functionality after deletion & User is logged in, undo banner appears after deletion \\
+\hline
+TC-DEL-007 & Verify email recovery from Trash & User is logged in, at least one email in Trash folder \\
+\hline
+TC-DEL-008 & Verify permanent deletion from Trash & User is logged in, at least one email in Trash \\
+\hline
+TC-DEL-009 & Verify "Delete all spam" works & User is logged in, at least one email in Spam folder \\
+\hline
+TC-DEL-010 & Verify "Empty Trash" functionality & User is logged in, Trash folder contains emails \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Inputs} & \textbf{Execution Steps} \\
+\hline
+TC-DEL-006 & Deleted email reference & \parbox{5cm}{1. Delete an email\\2. Click "Undo" within 5 seconds\\3. Verify email restored} \\
+\hline
+TC-DEL-007 & One email in Trash (ID: trash-001) & \parbox{5cm}{1. Navigate to Trash\\2. Select email\\3. Click "Move to Inbox"\\4. Verify restoration} \\
+\hline
+TC-DEL-008 & One email in Trash & \parbox{5cm}{1. Navigate to Trash\\2. Select email\\3. Click "Delete forever"\\4. Confirm deletion} \\
+\hline
+TC-DEL-009 & At least one spam email & \parbox{5cm}{1. Navigate to Spam\\2. Click "Delete all spam now"\\3. Confirm} \\
+\hline
+TC-DEL-010 & Trash folder with emails & \parbox{5cm}{1. Navigate to Trash\\2. Click "Empty Trash"\\3. Confirm} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Expected Results} \\
+\hline
+TC-DEL-006 & Email restored to original location in inbox \\
+\hline
+TC-DEL-007 & Email moved back to Inbox, accessible again \\
+\hline
+TC-DEL-008 & Email permanently removed, cannot be recovered \\
+\hline
+TC-DEL-009 & All spam emails permanently deleted \\
+\hline
+TC-DEL-010 & All emails in Trash permanently deleted \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Advanced Scenarios}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Objective} & \textbf{Preconditions} \\
+\hline
+TC-DEL-011 & Verify bulk deletion using "Select all" & User is logged in, inbox contains at least 10 emails \\
+\hline
+TC-DEL-012 & Verify deletion with attachments & User is logged in, email with attachment exists \\
+\hline
+TC-DEL-013 & Verify deletion of starred email & User is logged in, starred email exists \\
+\hline
+TC-DEL-014 & Verify deletion from sent folder & User is logged in, sent emails exist \\
+\hline
+TC-DEL-015 & Verify deletion notification appears & User is logged in, emails exist in inbox \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Test Inputs} & \textbf{Execution Steps} \\
+\hline
+TC-DEL-011 & All inbox emails & \parbox{5cm}{1. Click "Select all"\\2. Click Delete\\3. Confirm bulk deletion} \\
+\hline
+TC-DEL-012 & Email with large attachment (>25MB) & \parbox{5cm}{1. Select email with attachment\\2. Delete email\\3. Verify deletion} \\
+\hline
+TC-DEL-013 & Starred email & \parbox{5cm}{1. Select starred email\\2. Delete\\3. Verify star removed} \\
+\hline
+TC-DEL-014 & Sent email & \parbox{5cm}{1. Navigate to Sent\\2. Select email\\3. Delete} \\
+\hline
+TC-DEL-015 & Multiple emails selected & \parbox{5cm}{1. Select emails\\2. Delete\\3. Observe notification} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{3cm}|p{7cm}|}
+\hline
+\textbf{Test Case ID} & \textbf{Expected Results} \\
+\hline
+TC-DEL-011 & All emails moved to Trash, confirmation shown \\
+\hline
+TC-DEL-012 & Email with attachment deleted, storage freed \\
+\hline
+TC-DEL-013 & Starred email deleted, star icon removed from email \\
+\hline
+TC-DEL-014 & Sent email deleted, moved to Trash \\
+\hline
+TC-DEL-015 & Number of deleted emails shown in confirmation (e.g., "5 conversations deleted") \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Test Summary}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|p{4cm}|c|}
+\hline
+\textbf{Category} & \textbf{Count} & \textbf{Description} & \textbf{Priority} \\
+\hline
+Basic Deletion & 5 & Single and multiple email deletion & High \\
+\hline
+Undo/Recovery & 5 & Undo, restore, permanent delete & High \\
+\hline
+Advanced & 5 & Bulk, attachments, special folders & Medium \\
+\hline
+\textbf{Total} & \textbf{15} & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Automated Test Specification}
+
+For Step 2.2, the automated test corresponds to TC-DEL-005 (Delete unread email) and retrieves the title of the last unread email as specified in the requirements.
+
+\end{document}
